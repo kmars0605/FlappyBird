@@ -288,7 +288,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             
             item.run(itemAnimation)
             
-            if self.itemNode.children.count == 0 && random == 0{
+            if  random == 0{
                 self.itemNode.addChild(item)
             }
         })
@@ -346,7 +346,8 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             }
             
         }else if   (contact.bodyA.categoryBitMask & itemCategory) == itemCategory || (contact.bodyB.categoryBitMask & itemCategory) == itemCategory {
-            
+            print(contact.bodyA.categoryBitMask)
+            print(contact.bodyB.categoryBitMask)
             //アイテムの物体と衝突した
             print("ItemGet")
             
@@ -356,7 +357,16 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             
             itemScoreLabelNode.text = "Item:\(itemScore)"
             
-            itemNode.removeChildren(in: itemNode.children)
+            //itemNode.removeChildren(in: itemNode.children)
+            if contact.bodyA.categoryBitMask == itemCategory{
+                
+                contact.bodyA.node?.removeFromParent()
+                
+            }else if contact.bodyB.categoryBitMask == itemCategory{
+                
+                contact.bodyB.node?.removeFromParent()
+            }
+            
             
             
             
